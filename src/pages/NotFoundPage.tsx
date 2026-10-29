@@ -1,0 +1,3 @@
+import { Button, Container, Text, VStack } from '@chakra-ui/react';
+import { Link } from 'react-router-dom';
+export function NotFoundPage() { return <Container maxW="700px" py={24} textAlign="center"><VStack spacing={5}><Text fontSize="sm" letterSpacing=".2em" color="gray.500">404 / OFF THE MAP</Text><Text fontSize={{ base: '5xl', md: '7xl' }} fontWeight="800" letterSpacing="-.08em">Nothing here.</Text><Text color="gray.500">This page seems to have taken a different turn.</Text><Button as={Link} to="/" bg="graphite.900" color="white" _hover={{ bg: 'graphite.700' }}>Back to the good stuff</Button></VStack></Container>; }
