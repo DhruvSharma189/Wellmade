@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import cartReducer, {
   addToCart,
   clearCart,
-  removeFromCart,
+  // removeFromCart,
   setCartOpen,
   toggleWishlist,
   updateQuantity,
