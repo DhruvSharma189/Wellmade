@@ -1,5 +1,9 @@
 import { describe, expect, it } from 'vitest';
-import feedbackReducer, { addFeedback, resetFeedbackStatus, setSubmitting } from '../features/feedback/feedbackSlice';
+import feedbackReducer, {
+  addFeedback,
+  resetFeedbackStatus,
+  setSubmitting,
+} from '../features/feedback/feedbackSlice';
 import type { FeedbackEntry } from '../features/feedback/feedbackTypes';
 
 describe('feedbackSlice reducer', () => {

@@ -14,7 +14,6 @@ export const store = configureStore({
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 
-// Persistence for feedback, cart, and wishlist
 if (typeof window !== 'undefined') {
   let previousFeedback = store.getState().feedback.entries;
   let previousCart = store.getState().cart.items;
@@ -22,6 +21,7 @@ if (typeof window !== 'undefined') {
 
   store.subscribe(() => {
     const state = store.getState();
+
     if (state.feedback.entries !== previousFeedback) {
       previousFeedback = state.feedback.entries;
       try {
@@ -30,6 +30,7 @@ if (typeof window !== 'undefined') {
         /* storage may be quota-limited */
       }
     }
+
     if (state.cart.items !== previousCart) {
       previousCart = state.cart.items;
       try {
@@ -38,6 +39,7 @@ if (typeof window !== 'undefined') {
         /* storage may be quota-limited */
       }
     }
+
     if (state.cart.wishlistIds !== previousWishlist) {
       previousWishlist = state.cart.wishlistIds;
       try {

@@ -23,7 +23,6 @@ export function Brand3DEmblem() {
     container.innerHTML = '';
     container.appendChild(renderer.domElement);
 
-    // Studio Lights
     const ambientLight = new THREE.AmbientLight(0xfff3e6, 1.8);
     scene.add(ambientLight);
 
@@ -35,12 +34,11 @@ export function Brand3DEmblem() {
     rimLight.position.set(-2, -2, -1);
     scene.add(rimLight);
 
-    // 3D Gem / Cuboctahedron Geometry
     const geometry = new THREE.BoxGeometry(1.25, 1.25, 1.25);
     const materials = [
-      new THREE.MeshStandardMaterial({ color: 0xd47757, metalness: 0.8, roughness: 0.2 }), // Terracotta
-      new THREE.MeshStandardMaterial({ color: 0x243e33, metalness: 0.85, roughness: 0.25 }), // Deep Graphite
-      new THREE.MeshStandardMaterial({ color: 0xf5dfc8, metalness: 0.95, roughness: 0.15 }), // Pale Gold
+      new THREE.MeshStandardMaterial({ color: 0xd47757, metalness: 0.8, roughness: 0.2 }),
+      new THREE.MeshStandardMaterial({ color: 0x243e33, metalness: 0.85, roughness: 0.25 }),
+      new THREE.MeshStandardMaterial({ color: 0xf5dfc8, metalness: 0.95, roughness: 0.15 }),
       new THREE.MeshStandardMaterial({ color: 0xbd5e40, metalness: 0.75, roughness: 0.3 }),
       new THREE.MeshStandardMaterial({ color: 0x365446, metalness: 0.8, roughness: 0.2 }),
       new THREE.MeshStandardMaterial({ color: 0xe8a87c, metalness: 0.85, roughness: 0.2 }),
@@ -68,7 +66,7 @@ export function Brand3DEmblem() {
     return () => {
       if (animFrameId.current) cancelAnimationFrame(animFrameId.current);
       geometry.dispose();
-      materials.forEach(m => m.dispose());
+      materials.forEach((m) => m.dispose());
       renderer.dispose();
       container.innerHTML = '';
     };

@@ -38,7 +38,7 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addToCart(state, action: PayloadAction<{ product: Product; quantity?: number }>) {
-      const existing = state.items.find(i => i.product.id === action.payload.product.id);
+      const existing = state.items.find((i) => i.product.id === action.payload.product.id);
       const qty = action.payload.quantity ?? 1;
       if (existing) {
         existing.quantity += qty;
@@ -48,13 +48,13 @@ const cartSlice = createSlice({
       state.isCartOpen = true;
     },
     removeFromCart(state, action: PayloadAction<number>) {
-      state.items = state.items.filter(i => i.product.id !== action.payload);
+      state.items = state.items.filter((i) => i.product.id !== action.payload);
     },
     updateQuantity(state, action: PayloadAction<{ id: number; quantity: number }>) {
-      const item = state.items.find(i => i.product.id === action.payload.id);
+      const item = state.items.find((i) => i.product.id === action.payload.id);
       if (item) {
         if (action.payload.quantity <= 0) {
-          state.items = state.items.filter(i => i.product.id !== action.payload.id);
+          state.items = state.items.filter((i) => i.product.id !== action.payload.id);
         } else {
           item.quantity = action.payload.quantity;
         }
@@ -66,7 +66,7 @@ const cartSlice = createSlice({
     toggleWishlist(state, action: PayloadAction<number>) {
       const id = action.payload;
       if (state.wishlistIds.includes(id)) {
-        state.wishlistIds = state.wishlistIds.filter(item => item !== id);
+        state.wishlistIds = state.wishlistIds.filter((item) => item !== id);
       } else {
         state.wishlistIds.push(id);
       }

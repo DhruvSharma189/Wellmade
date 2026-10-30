@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Box, HStack, IconButton, Text, Tooltip } from '@chakra-ui/react';
+import { Box, Button, HStack, IconButton, Text, Tooltip } from '@chakra-ui/react';
 import { Layers, Maximize2, Orbit, RefreshCw, Sparkles, ZoomIn, ZoomOut } from 'lucide-react';
 import * as THREE from 'three';
 import type { Product } from '../../features/products/productsTypes';
@@ -52,7 +52,6 @@ export function Product3DViewer({ product, height = { base: '320px', md: '440px'
     container.appendChild(renderer.domElement);
     rendererRef.current = renderer;
 
-    // Studio Lighting
     const ambientLight = new THREE.AmbientLight(0xfff8f0, 1.4);
     scene.add(ambientLight);
 
@@ -69,7 +68,6 @@ export function Product3DViewer({ product, height = { base: '320px', md: '440px'
     bottomGlow.position.set(0, -1.2, 0.8);
     scene.add(bottomGlow);
 
-    // Studio Turntable Base
     const turntableGeo = new THREE.CylinderGeometry(1.4, 1.45, 0.1, 48);
     const turntableMat = new THREE.MeshStandardMaterial({
       color: 0x22352c,
@@ -81,12 +79,10 @@ export function Product3DViewer({ product, height = { base: '320px', md: '440px'
     turntable.receiveShadow = true;
     scene.add(turntable);
 
-    // Group for the 3D Product Model
     const modelGroup = new THREE.Group();
     scene.add(modelGroup);
     modelGroupRef.current = modelGroup;
 
-    // Render loop
     const animate = () => {
       currentRotation.current.x += (rotationTarget.current.x - currentRotation.current.x) * 0.1;
       currentRotation.current.y += (rotationTarget.current.y - currentRotation.current.y) * 0.1;
@@ -123,7 +119,6 @@ export function Product3DViewer({ product, height = { base: '320px', md: '440px'
     };
   }, []);
 
-  // Update Geometry Based on Category
   useEffect(() => {
     const group = modelGroupRef.current;
     if (!group) return;
@@ -132,7 +127,7 @@ export function Product3DViewer({ product, height = { base: '320px', md: '440px'
       const child = group.children[0] as THREE.Mesh;
       if (child.geometry) child.geometry.dispose();
       if (Array.isArray(child.material)) {
-        child.material.forEach(m => m.dispose());
+        child.material.forEach((m) => m.dispose());
       } else if (child.material) {
         child.material.dispose();
       }
@@ -142,7 +137,6 @@ export function Product3DViewer({ product, height = { base: '320px', md: '440px'
     const cat = product.category.toLowerCase();
 
     if (cat.includes('jewel')) {
-      // Brilliant cut gemstone & ring band
       const gemGeo = new THREE.OctahedronGeometry(0.72, 2);
       const gemMat = new THREE.MeshPhysicalMaterial({
         color: 0xf5dfc8,
@@ -170,7 +164,6 @@ export function Product3DViewer({ product, height = { base: '320px', md: '440px'
       band.position.y = -0.3;
       group.add(band);
     } else if (cat.includes('electr')) {
-      // High-precision sleek gadget chassis with screen and camera bezel
       const bodyGeo = new THREE.BoxGeometry(1.2, 1.7, 0.16);
       const bodyMat = new THREE.MeshStandardMaterial({
         color: 0x232927,
@@ -181,7 +174,6 @@ export function Product3DViewer({ product, height = { base: '320px', md: '440px'
       const body = new THREE.Mesh(bodyGeo, bodyMat);
       group.add(body);
 
-      // Glass front
       const screenGeo = new THREE.PlaneGeometry(1.08, 1.54);
       const screenMat = new THREE.MeshPhysicalMaterial({
         color: 0x111614,
@@ -195,7 +187,6 @@ export function Product3DViewer({ product, height = { base: '320px', md: '440px'
       screen.position.z = 0.085;
       group.add(screen);
 
-      // Accent ring
       const lensGeo = new THREE.CylinderGeometry(0.18, 0.18, 0.04, 32);
       const lensMat = new THREE.MeshStandardMaterial({
         color: 0xd47757,
@@ -208,7 +199,6 @@ export function Product3DViewer({ product, height = { base: '320px', md: '440px'
       lens.position.set(0.35, 0.55, 0.09);
       group.add(lens);
     } else if (cat.includes('cloth')) {
-      // Sculptural organic mannequin form
       const points: THREE.Vector2[] = [];
       for (let i = 0; i <= 20; i++) {
         const y = (i / 20) * 1.8 - 0.9;
@@ -225,7 +215,6 @@ export function Product3DViewer({ product, height = { base: '320px', md: '440px'
       const torso = new THREE.Mesh(torsoGeo, torsoMat);
       group.add(torso);
 
-      // Brass base stand
       const standGeo = new THREE.CylinderGeometry(0.04, 0.04, 0.6, 16);
       const standMat = new THREE.MeshStandardMaterial({
         color: 0xd9b382,
@@ -237,7 +226,6 @@ export function Product3DViewer({ product, height = { base: '320px', md: '440px'
       stand.position.y = -0.95;
       group.add(stand);
     } else {
-      // Artisanal Luxury Box / Curated Monolith
       const boxGeo = new THREE.BoxGeometry(1.2, 1.2, 1.2);
       const boxMat = new THREE.MeshPhysicalMaterial({
         color: 0xf4ede4,
@@ -262,7 +250,6 @@ export function Product3DViewer({ product, height = { base: '320px', md: '440px'
     }
   }, [product.category, isWireframe]);
 
-  // Handle Zoom change
   useEffect(() => {
     if (cameraRef.current) {
       cameraRef.current.position.z = 4.2 / zoomLevel;
@@ -324,7 +311,6 @@ export function Product3DViewer({ product, height = { base: '320px', md: '440px'
     >
       <Box ref={mountRef} w="100%" h="100%" />
 
-      {/* Top Left Status */}
       <HStack
         position="absolute"
         top={3}
@@ -346,7 +332,6 @@ export function Product3DViewer({ product, height = { base: '320px', md: '440px'
         </Text>
       </HStack>
 
-      {/* Top Right Controls */}
       <HStack position="absolute" top={3} right={3} spacing={1.5} zIndex={10} pointerEvents="auto">
         <Tooltip label={isRotating ? 'Pause turntable' : 'Spin turntable'}>
           <IconButton
@@ -439,7 +424,6 @@ export function Product3DViewer({ product, height = { base: '320px', md: '440px'
         </Tooltip>
       </HStack>
 
-      {/* Bottom Hint */}
       <HStack
         position="absolute"
         bottom={3}
